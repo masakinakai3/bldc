@@ -1,0 +1,180 @@
+[phase6] Starting Phase6 run: Fri Dec 26 01:51:02 UTC 2025
+[phase6] make phase5
+gcc -Wall -Wextra -O2 -g -DNO_STM32 -DUSE_PC_BUILD -I. -Ichibios_posix -Istubs -Ihw_stub -I../util -I.. -I../comm -I../applications -Imotor_sim -I../motor -o build/test_regression tests/test_regression.c -Lbuild -lmotor_sim -lvesc_pc -lpthread -lm -lrt
+Build successful: build/test_regression
+Phase 5 build complete
+[phase6] make test_phase5
+Running FOC math unit tests...
+=== FOC Math Unit Tests ===
+
+--- SVM Tests ---
+Running test_svm_sector_1...
+  PASS
+Running test_svm_sector_symmetry...
+  PASS
+Running test_svm_zero_vector...
+  PASS
+Running test_svm_max_modulation...
+  PASS
+
+--- PLL Tests ---
+Running test_pll_basic...
+  PASS
+Running test_pll_tracking...
+    PLL final speed = 777.583, target = 1000.000, error = 222.417
+  PASS
+
+--- Observer Tests ---
+Running test_observer_basic...
+  PASS
+Running test_observer_rotation...
+  PASS
+
+--- Precalc Tests ---
+Running test_precalc_values...
+  PASS
+
+--- PID Controller Tests ---
+Running test_pid_current...
+  PASS
+
+--- Integration Tests ---
+Running test_foc_math_integration...
+  PASS
+
+=== Test Summary ===
+Total: 11, Passed: 11, Failed: 0
+Running virtual motor tests...
+=== Virtual Motor PC Unit Tests ===
+
+--- Initialization Tests ---
+Running test_vm_init_default...
+  PASS
+Running test_vm_reset...
+  PASS
+
+--- Electrical Dynamics Tests ---
+Running test_vm_current_response...
+  PASS
+Running test_vm_io_structure...
+  PASS
+
+--- Mechanical Dynamics Tests ---
+Running test_vm_torque_production...
+  PASS
+Running test_vm_acceleration...
+  PASS
+Running test_vm_load_torque...
+  PASS
+
+--- API Tests ---
+Running test_vm_getter_functions...
+  PASS
+Running test_vm_state_access...
+  PASS
+
+--- Steady-State Tests ---
+Running test_vm_steady_state_current...
+  PASS
+
+=== Test Summary ===
+Total: 10, Passed: 10, Failed: 0
+Running FOC simulation tests...
+=== FOC Simulation Integration Tests ===
+
+--- Current Control Tests ---
+Running test_current_control_step_response...
+  PASS
+Running test_current_control_zero_reference...
+    Final currents: id=41.4084, iq=-18.4634, speed=100.8352
+  PASS
+
+--- Speed Control Tests ---
+Running test_speed_control_basic...
+  PASS
+Running test_speed_control_with_load...
+  PASS
+
+--- Position Control Tests ---
+Running test_position_control_basic...
+  PASS
+
+--- Data Recording Tests ---
+Running test_data_recording...
+  PASS
+
+--- Statistics Tests ---
+Running test_statistics_collection...
+  PASS
+
+--- State Management Tests ---
+Running test_simulation_pause_resume...
+  PASS
+Running test_simulation_stop...
+  PASS
+
+--- Timing Tests ---
+Running test_simulation_completion...
+  PASS
+
+--- Performance Tests ---
+Running test_simulation_performance...
+    Simulated 0.5s in 0.003 seconds (158.9x realtime)
+  PASS
+
+=== Test Summary ===
+Total: 11, Passed: 11, Failed: 0
+Running regression tests...
+========================================
+Phase 5 Regression Tests
+========================================
+
+--- Data Format Tests ---
+Running test_reference_files_exist...
+  Found: reference/speed_step_response.csv
+  Found: reference/torque_step_response.csv
+  Found: reference/hfi_operation.csv
+  PASS
+Running test_csv_format_roundtrip...
+  PASS
+Running test_statistics_calculation...
+  PASS
+
+--- Regression Tests ---
+Running test_speed_step_regression...
+  Loaded 29 records from reference/speed_step_response.csv
+  Loaded 210 records from results/speed_step_test.csv
+  Comparison results for Speed Step Response:
+    Points compared: 29
+    Max id error:    51.870617 A (avg: 19.827156)
+    Max iq error:    75.370132 A (avg: 30.698914)
+    Max speed error: 10133.314453 rad/s (avg: 2561.785400)
+    Max torque error: 7.467065 Nm (avg: 2.364202)
+  NOTE: Results differ from reference (expected during development)
+  PASS
+Running test_torque_step_regression...
+  Loaded 29 records from reference/torque_step_response.csv
+  Loaded 210 records from results/torque_step_test.csv
+  Comparison results for Torque Step Response:
+    Points compared: 29
+    Max id error:    48.079777 A (avg: 35.256790)
+    Max iq error:    39.372662 A (avg: 18.122227)
+    Max speed error: 536.308472 rad/s (avg: 478.110870)
+    Max torque error: 4.063584 Nm (avg: 1.678473)
+  PASS
+Running test_hfi_operation_regression...
+  Loaded 29 records from reference/hfi_operation.csv
+  Loaded 210 records from results/hfi_test.csv
+  Comparison results for HFI Operation:
+    Points compared: 29
+    Max id error:    52.096611 A (avg: 34.632885)
+    Max iq error:    38.626453 A (avg: 19.636143)
+    Max speed error: 61.683434 rad/s (avg: 20.358051)
+    Max torque error: 3.633032 Nm (avg: 1.922662)
+  PASS
+
+========================================
+Regression Test Results: 6/6 passed
+========================================
+All Phase 5 tests completed
+[phase6] Phase6 completed successfully: Fri Dec 26 01:51:03 UTC 2025
